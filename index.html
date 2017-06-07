@@ -295,6 +295,10 @@ var app = new Vue({
           android.alert(msg);
         });
       }
+      var data = JSON.stringify(that.postData);
+      window. android.androidWebJsHandle('android',data, function(msg){
+          android.alert(msg);
+        });
     }
   }
 });
