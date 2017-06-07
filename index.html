@@ -262,6 +262,8 @@ var app = new Vue({
   },
   methods: {
     submit: function() {
+      alert(1111);
+      alert(browser.versions.android);
       var that = this;
       if (browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) {
         function setupWebViewJavascriptBridge(callback) {
