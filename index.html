@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>通信测试</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no, initial-scale=1.0">
+  <meta content="telephone=no,email=no" name="format-detection">
+  <script src="./js/browser.js"></script>
+  <style>
+    html, body, p, span, input, button, ul, li,table, thead, tbody, tr, td, img
+    {
+      margin: 0;
+      padding: 0;
+
+      outline: none;
+      font-size: 14px;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    a, button
+    {
+      star:expression_r(this.onFocus=this.blur());
+    }
+    body
+    {
+      padding-bottom: 75px;
+
+      background-color: #eaeff3;
+    }
+    .flex-row
+    {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    .flex-column
+    {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+    .radios
+    {
+      padding: 15px;
+    }
+    .input
+    {
+      width: 100%;
+      height: 30px;
+      margin-top: 5px;
+      border: none;
+      outline: none;
+    }
+    .btn
+    {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 43px;
+      line-height: 43px;
+      border: none;
+
+      background-color: #27b8f3;
+      color: #fefeff;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="radios flex-row">
+      <label><input v-model="postData.Body.ObjectApns.Type" type="radio" value="0" disabled="disabled" name="type">0 文本信息</label>
+      <label><input v-model="postData.Body.ObjectApns.Type" type="radio" value="1" checked="checked" name="type">1 内链</label>
+      <label><input v-model="postData.Body.ObjectApns.Type" type="radio" value="2" disabled="disabled" name="type">2 跳转新的web</label>
+      <label><input v-model="postData.Body.ObjectApns.Type" type="radio" value="3" disabled="disabled" name="type">3 刷新新的url</label>
+    </div>
+
+    <fieldset>
+      <legend>App View Id</legend>
+      <input type="number" class="input" v-model="postData.Body.ObjectApns.AppViewId" placeholder="App View Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>是否为活动页</legend>
+      <input type="number" class="input" v-model="postData.Body.ObjectApns.IsActivity" placeholder="Is Activity 0否 1是">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转url</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.JumpUrl" placeholder="Jump Url">
+    </fieldset>
+
+    <fieldset>
+      <legend>弹窗</legend>
+      <input type="number" class="input" v-model="postData.Body.ObjectApns.NeedAlert" placeholder="Need Alert 0->no; 1->need">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.AlertTitle" placeholder="Title">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.AlertMessage" placeholder="Message">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.AlertCancelTitle" placeholder="Cancel Title">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.AlertConfirmTitle" placeholder="Confirm Title">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转订单详情</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Order.OrderId" placeholder="Order Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>如果跳转消息，需要附带消息的信息</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Message.Id" placeholder="Id">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Message.Title" placeholder="Title">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Message.Content" placeholder="Content">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Message.Date" placeholder="Date">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转支付</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Order2Pay.OrderId" placeholder="Order Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转工人详情</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Worker.WorkerId" placeholder="Worker Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转商户详情</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Merchant.MerchantId" placeholder="Merchant Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>分享</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.ShareInfo.Title" placeholder="Title">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.ShareInfo.Description" placeholder="Description">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.ShareInfo.Url" placeholder="Url">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.ShareInfo.Picture" placeholder="Picture">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.ShareInfo.ContentType" placeholder="Content Type">
+    </fieldset>
+
+    <fieldset>
+      <legend>注册并填写邀请码，如果不需要邀请码不传这个</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Register.RecommendUserId" placeholder="Recommend User Id">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Register.RecommendCode" placeholder="Recommend Code">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.Register.RecommendUserName" placeholder="Recommend User Name">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转设置界面填写邀请码</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.SetRecommend.RecommendUserId" placeholder="Recommend User Id">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.SetRecommend.RecommendCode" placeholder="Recommend Code">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.SetRecommend.RecommendUserName" placeholder="Recommend User Name">
+    </fieldset>
+
+    <fieldset>
+      <legend>使用红包页面需要的信息</legend>
+      <input type="number" class="input" v-model="postData.Body.ObjectApns.DisCountInfo.TotalMoney" placeholder="Total Money">
+      <input type="number" class="input" v-model="postData.Body.ObjectApns.DisCountInfo.IsNotUseCoupon" placeholder="关联订单是否有红包可用 0:不使用，1使用">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.DisCountInfo.ServiceId" placeholder="Service Id">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.DisCountInfo.CouponId" placeholder="Coupon Id">
+    </fieldset>
+
+    <fieldset>
+      <legend>跳转小秘书需要的信息</legend>
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.CustomerService.Name" placeholder="Name">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.CustomerService.Price" placeholder="Price">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.CustomerService.ImageUrl" placeholder="Image Url">
+      <input type="text" class="input" v-model="postData.Body.ObjectApns.CustomerService.DetailUrl" placeholder="Detail Url">
+    </fieldset>
+
+    <button type="button" class="btn" @click="submit">点我测试</button>
+  </div>
+</body>
+<script src="./js/vue.min.js"></script>
+<script>
+function GetDataFromApp(data) {
+  alert(data);
+}
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    postData: {
+      "Meta": {
+        "ErrorCode": "0", //无意义，为了解析规范
+        "ErrorMsg": "success" //错误信息，如果有错误信息，请在这里返回
+      },
+      "Body": { //返回的数据实体
+        "ObjectApns": {
+          "Type": "1", //0 默认，信息 //1 内链 //2 跳转新web //3 此web刷新新url
+          "JumpUrl": "", //2或者3类型跳转的url
+          "AppViewId": "", //WebAppViewId枚举 比如"1000"就弹一个登录弹窗
+          "NeedAlert": "0", //是否需要弹窗  0不需要  1需要
+          "AlertTitle": "", //弹窗title
+          "AlertMessage": "", //弹窗msg
+          "AlertCancelTitle": "", //弹窗取消按钮
+          "AlertConfirmTitle": "", //弹窗确定按钮
+          "Order": { //如果跳转订单详情  需要这里传orderid
+            "OrderId": "" //
+          },
+          "Message": { //如果跳转消息，需要附带消息的信息
+            "Id": "",
+            "Title": "",
+            "Content": "",
+            "Date": "",
+          },
+          "Order2Pay": { //跳转付款
+            "OrderId": ""
+          },
+          "Worker": { //跳转工人详情
+            "WorkerId": ""
+          },
+          "Merchant": { //跳转商户详情
+            "MerchantId": ""
+          },
+          "ShareInfo": { //分享
+            "Title": "",
+            "Description": "",
+            "Url": "",
+            "Picture": "",
+            "ContentType": ""
+          },
+          "Register": { //注册并填写邀请码，如果不需要邀请码  不传这个
+            "RecommendUserId": "",
+            "RecommendCode": "",
+            "RecommendUserName": ""
+          },
+          "SetRecommend": { //跳转设置界面填写邀请码
+            "RecommendUserId": "",
+            "RecommendCode": "",
+            "RecommendUserName": ""
+          },
+          "DisCountInfo": { //使用红包页面需要的信息
+            "TotalMoney": "", //订单总金额
+            "IsNotUseCoupon": "", //关联订单是否有红包可用0:不使用，1使用
+            "ServiceId": "", //服务Id
+            "CouponId": "" //默认选择的优惠券或者上一次选择的优惠券
+          },
+          "CustomerService": { //跳转小秘书需要的信息
+            "Name": "", //活动或商品名称
+            "Price": "", //活动或商品价格
+            "ImageUrl": "", //活动或商品图片
+            "DetailUrl": "" //活动或商品链接
+          }
+        }
+      }
+    }
+  },
+  methods: {
+    submit: function() {
+      var that = this;
+      if (browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) {
+        function setupWebViewJavascriptBridge(callback) {
+          if (window.WebViewJavascriptBridge) {
+            return callback(WebViewJavascriptBridge);
+          }
+          if (window.WVJBCallbacks) {
+            return window.WVJBCallbacks.push(callback);
+          }
+          window.WVJBCallbacks = [callback];
+          var WVJBIframe = document.createElement('iframe');
+          WVJBIframe.style.display = 'none';
+          WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+          document.documentElement.appendChild(WVJBIframe);
+          setTimeout(function() {
+            document.documentElement.removeChild(WVJBIframe)
+          }, 0)
+        }
+        setupWebViewJavascriptBridge(function(bridge) {
+          bridge.callHandler('iosWebJsHandle', that.postData, function(response) {
+            }
+          );
+        });
+      }
+      if (browser.versions.android) {
+        var data = JSON.stringify(that.postData);
+        javascript: android.androidWebJsHandle(data);
+      }
+    }
+  }
+});
+</script>
+</html>
