@@ -287,10 +287,9 @@ var app = new Vue({
         });
       }
       if (browser.versions.android) {
+        alert(browser.versions.android);
         var data = JSON.stringify(that.postData);
-         console.log(browser)
-         console.log(browser.versions.android)
-        javascript: android.androidWebJsHandle(data, function(msg){
+        android.androidWebJsHandle(data, function(msg){
           android.alert(msg);
         });
       }
